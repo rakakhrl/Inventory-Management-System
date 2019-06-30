@@ -218,7 +218,6 @@ public class InventoryController {
             getPS.setString(1, kodeBrg);
             
             result = editPS.executeUpdate();
-            // result = getPS.executeQuery();
             
             if (result == 1) {
                 response.put("code", "OPERATION_SUCCESS");

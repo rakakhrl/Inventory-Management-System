@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.view.inventory;
+package com.view.driver;
 
-import com.controller.InventoryController;
+import com.controller.DriverController;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -13,44 +13,19 @@ import javax.swing.JOptionPane;
  *
  * @author rakakhrl
  */
-public class EditInventoryForm extends javax.swing.JFrame {
-    InventoryController _inventoryCtrl = new InventoryController();
-    
-    String kodeBrg;
-    String namaBrg;
-    float hargaBrg;
-    int jumlahBrg;
+public class AddDriverForm extends javax.swing.JFrame {
+    DriverController _driverCtrl = new DriverController();
 
     /**
-     * Creates new form EditInventoryForm
-     * @param kodeBrg
-     * @param namaBrg
-     * @param hargaBrg
-     * @param jumlahBrg
+     * Creates new form AddDriverForm
      */
-    public EditInventoryForm(String kodeBrg, String namaBrg, float hargaBrg, int jumlahBrg) {
+    public AddDriverForm() {
         initComponents();
-        
-        this.kodeBrg = kodeBrg;
-        this.namaBrg = namaBrg;
-        this.hargaBrg = hargaBrg;
-        this.jumlahBrg = jumlahBrg;
-        
-        populateTextField(this.kodeBrg, this.namaBrg, this.hargaBrg, this.jumlahBrg);
     }
     
-    private void populateTextField(String kodeBrg, String namaBrg, float hargaBrg, int jumlahBrg) {
-        kodeBrgTextField.setText(kodeBrg);
-        namaBrgTextField.setText(namaBrg);
-        hargaBrgTextField.setText(String.format("%.02f", hargaBrg));
-        jumlahBrgTextField.setText(Integer.toString(jumlahBrg));
-    }
-    
-    private void resetForm() {
-        kodeBrgTextField.setText(this.kodeBrg);
-        namaBrgTextField.setText(this.namaBrg);
-        hargaBrgTextField.setText(String.format("%.02f", String.valueOf(this.hargaBrg)));
-        jumlahBrgTextField.setText(Integer.toString(this.jumlahBrg));
+    private void clearForm() {
+        kodeDriverTextField.setText("");
+        namaDriverTextField.setText("");
     }
 
     /**
@@ -63,44 +38,31 @@ public class EditInventoryForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        kodeBrgTextField = new javax.swing.JTextField();
+        kodeDriverTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        namaBrgTextField = new javax.swing.JTextField();
-        jumlahBrgTextField = new javax.swing.JTextField();
+        namaDriverTextField = new javax.swing.JTextField();
         submitBtn = new javax.swing.JButton();
-        hargaBrgTextField = new javax.swing.JTextField();
+        clearBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel5.setText("Harga / Kg");
-
-        kodeBrgTextField.setEditable(false);
-        kodeBrgTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        kodeDriverTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Circular Std Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Tambah Jenis Barang");
+        jLabel1.setText("Add New Driver");
 
         jLabel2.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel2.setText("Kode Barang");
-
-        jLabel4.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel4.setText("Jumlah (gr)");
+        jLabel2.setText("Kode Driver");
 
         jLabel3.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel3.setText("Nama Barang");
+        jLabel3.setText("Nama Driver");
 
-        namaBrgTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
-
-        jumlahBrgTextField.setEditable(false);
-        jumlahBrgTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        namaDriverTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
 
         submitBtn.setBackground(new java.awt.Color(51, 102, 255));
         submitBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
@@ -112,8 +74,15 @@ public class EditInventoryForm extends javax.swing.JFrame {
             }
         });
 
-        hargaBrgTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
-        hargaBrgTextField.setInheritsPopupMenu(true);
+        clearBtn.setBackground(new java.awt.Color(255, 255, 255));
+        clearBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
+        clearBtn.setForeground(new java.awt.Color(51, 102, 255));
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,20 +95,16 @@ public class EditInventoryForm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(kodeBrgTextField))
+                        .addComponent(kodeDriverTextField))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(153, 153, 153)
+                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(namaBrgTextField)
-                            .addComponent(jumlahBrgTextField)
-                            .addComponent(hargaBrgTextField, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(namaDriverTextField))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -149,22 +114,16 @@ public class EditInventoryForm extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(kodeBrgTextField)
+                    .addComponent(kodeDriverTextField)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaBrgTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(hargaBrgTextField))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jumlahBrgTextField))
-                .addGap(18, 18, 18)
-                .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(namaDriverTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(124, 124, 124)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(clearBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -183,21 +142,23 @@ public class EditInventoryForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        String kodeBarang= kodeBrgTextField.getText();
-        String namaBarang = namaBrgTextField.getText();
-        float hargaBarang = Float.valueOf(hargaBrgTextField.getText());
-        HashMap<String, String> response;
-        
-        response = _inventoryCtrl.editBarang(kodeBarang, namaBarang, hargaBarang);
-        
+        String kodeDriver = kodeDriverTextField.getText();
+        String namaDriver = namaDriverTextField.getText();
+
+        HashMap<String, String> response = _driverCtrl.addDriver(kodeDriver, namaDriver);
+
         if (response.get("code") == "OPERATION_SUCCESS" || response.get("code") == "SQL_ERROR") {
             JOptionPane.showMessageDialog(null, response.get("message"));
             this.dispose();
         } else if (response.get("code") == "OPERATION_FAILED") {
             JOptionPane.showMessageDialog(null, response.get("message"));
-            resetForm();
+            clearForm();
         }
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        clearForm();
+    }//GEN-LAST:event_clearBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,36 +177,32 @@ public class EditInventoryForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditInventoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditInventoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditInventoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditInventoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                new EditInventoryForm("","",0,0).setVisible(true);
+                new AddDriverForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField hargaBrgTextField;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jumlahBrgTextField;
-    private javax.swing.JTextField kodeBrgTextField;
-    private javax.swing.JTextField namaBrgTextField;
+    private javax.swing.JTextField kodeDriverTextField;
+    private javax.swing.JTextField namaDriverTextField;
     private javax.swing.JButton submitBtn;
     // End of variables declaration//GEN-END:variables
 }
