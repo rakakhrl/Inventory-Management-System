@@ -17,17 +17,18 @@ import java.util.HashMap;
  * @author rakakhrl
  */
 public class DriverController {
-    public HashMap<String, String> addDriver(String kodeDriver, String namaDriver) {
+    public HashMap<String, String> addDriver(String kodeDriver, String namaDriver, String phoneNum) {
         int result;
         Connection conn = DatabaseConnection.initConnection();
         HashMap<String, String> response = new HashMap<String, String>();
         
-        String sqlQuery = "INSERT INTO driver (kode_driver, nama_driver) VALUES (?, ?)";
+        String sqlQuery = "INSERT INTO driver (kode_driver, nama_driver, nomor_telpon) VALUES (?, ?, ?)";
         
         try {
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
             ps.setString(1, kodeDriver);
             ps.setString(2, namaDriver);
+            ps.setString(3, phoneNum);
             
             result = ps.executeUpdate();
             
@@ -81,17 +82,18 @@ public class DriverController {
         } 
     }
     
-    public HashMap<String, String> editDriver(String kodeDriver, String namaDriver) {
+    public HashMap<String, String> editDriver(String kodeDriver, String namaDriver, String phoneNum) {
         int result;
         Connection conn = DatabaseConnection.initConnection();
         HashMap<String, String> response = new HashMap<String, String>();
         
-        String sqlQuery = "UPDATE driver SET nama_driver=? WHERE kode_driver=?";
+        String sqlQuery = "UPDATE driver SET nama_driver=?, nomor_telpon=? WHERE kode_driver=?";
         
         try {
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
             ps.setString(1, namaDriver);
-            ps.setString(2, kodeDriver);
+            ps.setString(2, phoneNum);
+            ps.setString(3, kodeDriver);
             
             result = ps.executeUpdate();
             
@@ -138,10 +140,11 @@ public class DriverController {
         ResultSet result;
         Connection conn = DatabaseConnection.initConnection();
         
-        String sqlQuery = "SELECT * FROM driver WHERE kode_driver=?";
+        String sqlQuery = "SELECT * FROM driver WHERE kode_supir=?";
         
         try {
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setString(1, kodeDriver);
             
             result = ps.executeQuery();
             

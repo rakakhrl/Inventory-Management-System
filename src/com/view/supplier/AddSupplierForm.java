@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.view.driver;
+package com.view.supplier;
 
-import com.controller.DriverController;
+import com.controller.SupplierController;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -13,29 +13,20 @@ import javax.swing.JOptionPane;
  *
  * @author rakakhrl
  */
-public class EditDriverForm extends javax.swing.JFrame {
-    DriverController _driverCtrl = new DriverController();
+public class AddSupplierForm extends javax.swing.JFrame {
+    SupplierController _supplierCtrl = new SupplierController();
 
-    String kodeDriver;
-    String namaDriver;
-    
     /**
-     * Creates new form EditDriverForm
-     * @param kodeDriver
-     * @param namaDriver
+     * Creates new form AddSupplierForm
      */
-    public EditDriverForm(String kodeDriver, String namaDriver) {
+    public AddSupplierForm() {
         initComponents();
-        
-        this.kodeDriver = kodeDriver;
-        this.namaDriver = namaDriver;
-        
-        populateTextField();
     }
     
-    private void populateTextField() {
-        kodeDriverTextField.setText(this.kodeDriver);
-        namaDriverTextField.setText(this.namaDriver);
+    private void clearForm() {
+        kodeSupplierTextField.setText("");
+        namaSupplierTextField.setText("");
+        alamatTextField.setText("");
     }
 
     /**
@@ -48,33 +39,33 @@ public class EditDriverForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        kodeDriverTextField = new javax.swing.JTextField();
+        kodeSupplierTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        namaDriverTextField = new javax.swing.JTextField();
+        namaSupplierTextField = new javax.swing.JTextField();
         submitBtn = new javax.swing.JButton();
+        clearBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        phoneNumDriverTextField = new javax.swing.JTextField();
+        alamatTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        kodeDriverTextField.setEditable(false);
-        kodeDriverTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        kodeSupplierTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Circular Std Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Edit Driver Information");
+        jLabel1.setText("Add New Supplier");
 
         jLabel2.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel2.setText("Kode Driver");
+        jLabel2.setText("Kode Supplier");
 
         jLabel3.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel3.setText("Nama Driver");
+        jLabel3.setText("Nama Supplier");
 
-        namaDriverTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        namaSupplierTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
 
         submitBtn.setBackground(new java.awt.Color(51, 102, 255));
         submitBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
@@ -86,10 +77,20 @@ public class EditDriverForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel4.setText("Nomor Telpon");
+        clearBtn.setBackground(new java.awt.Color(255, 255, 255));
+        clearBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
+        clearBtn.setForeground(new java.awt.Color(51, 102, 255));
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
 
-        phoneNumDriverTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel4.setText("Alamat");
+
+        alamatTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,19 +103,20 @@ public class EditDriverForm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(kodeDriverTextField))
+                        .addComponent(kodeSupplierTextField))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(153, 153, 153)
+                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(namaDriverTextField)))
+                            .addComponent(namaSupplierTextField)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(phoneNumDriverTextField)))
+                        .addComponent(alamatTextField)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -124,18 +126,20 @@ public class EditDriverForm extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(kodeDriverTextField)
+                    .addComponent(kodeSupplierTextField)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaDriverTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaSupplierTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(phoneNumDriverTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(alamatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70)
-                .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(clearBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -154,21 +158,24 @@ public class EditDriverForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        String kodeDriver= kodeDriverTextField.getText();
-        String namaDriver = namaDriverTextField.getText();
-        String phoneNum = phoneNumDriverTextField.getText();
-        HashMap<String, String> response;
+        String kodeSupplier = kodeSupplierTextField.getText();
+        String namaSupplier = namaSupplierTextField.getText();
+        String alamat = alamatTextField.getText();
 
-        response = _driverCtrl.editDriver(kodeDriver, namaDriver, phoneNum);
+        HashMap<String, String> response = _supplierCtrl.addSupplier(kodeSupplier, namaSupplier, alamat);
 
         if (response.get("code") == "OPERATION_SUCCESS" || response.get("code") == "SQL_ERROR") {
             JOptionPane.showMessageDialog(null, response.get("message"));
             this.dispose();
         } else if (response.get("code") == "OPERATION_FAILED") {
             JOptionPane.showMessageDialog(null, response.get("message"));
-            populateTextField();
+            clearForm();
         }
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        clearForm();
+    }//GEN-LAST:event_clearBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,33 +194,34 @@ public class EditDriverForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplierForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplierForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplierForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditDriverForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplierForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditDriverForm("", "").setVisible(true);
+                new AddSupplierForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField alamatTextField;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField kodeDriverTextField;
-    private javax.swing.JTextField namaDriverTextField;
-    private javax.swing.JTextField phoneNumDriverTextField;
+    private javax.swing.JTextField kodeSupplierTextField;
+    private javax.swing.JTextField namaSupplierTextField;
     private javax.swing.JButton submitBtn;
     // End of variables declaration//GEN-END:variables
 }

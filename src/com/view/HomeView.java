@@ -13,6 +13,22 @@ import com.controller.DriverController;
 import com.view.driver.AddDriverForm;
 import com.view.driver.EditDriverForm;
 
+import com.controller.TransactionController;
+import com.view.transaction.AddTransactionForm;
+import com.view.transaction.ChangeStatusForm;
+
+import com.controller.VehicleController;
+import com.view.vehicle.AddVehicleForm;
+import com.view.vehicle.EditVehicleForm;
+
+import com.controller.SupplierController;
+import com.view.supplier.AddSupplierForm;
+import com.view.supplier.EditSupplierForm;
+
+import com.controller.CustomerController;
+import com.view.customer.AddCustomerForm;
+import com.view.customer.EditCustomerForm;
+
 import java.util.HashMap;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,18 +42,27 @@ import net.proteanit.sql.DbUtils;
  * @author rakakhrl
  */
 public class HomeView extends javax.swing.JFrame {
+
     InventoryController _inventoryCtrl = new InventoryController();
     DriverController _driverCtrl = new DriverController();
-    
-    String userRole;
+    TransactionController _transactionCtrl = new TransactionController();
+    VehicleController _vehicleCtrl = new VehicleController();
+    SupplierController _supplierCtrl = new SupplierController();
+    CustomerController _customerCtrl = new CustomerController();
+
     /**
      * Creates new form HomeView
      */
     public HomeView() {
         initComponents();
         loadTable("all");
+
+        transactionSearchComboBox.addItem("kode");
+        transactionSearchComboBox.addItem("status");
+        transactionSearchComboBox.addItem("kode_supplier");
+        transactionSearchComboBox.addItem("kode_customer");
     }
-    
+
     private void loadTable(String tablename) {
         switch (tablename) {
             case "inventory":
@@ -47,11 +72,24 @@ public class HomeView extends javax.swing.JFrame {
                 driverTable.setModel(DbUtils.resultSetToTableModel(_driverCtrl.fetchAll()));
                 break;
             case "transaction":
-                // TODO implement fetch transaction table
+                transactionTable.setModel(DbUtils.resultSetToTableModel(_transactionCtrl.fetchAll()));
+                break;
+            case "supplier":
+                supplierTable.setModel(DbUtils.resultSetToTableModel(_supplierCtrl.fetchAll()));
+                break;
+            case "customer":
+                customerTable.setModel(DbUtils.resultSetToTableModel(_customerCtrl.fetchAll()));
+                break;
+            case "vehicle":
+                vehicleTable.setModel(DbUtils.resultSetToTableModel(_vehicleCtrl.fetchAll()));
                 break;
             case "all":
                 inventoryTable.setModel(DbUtils.resultSetToTableModel(_inventoryCtrl.fetchAll()));
                 driverTable.setModel(DbUtils.resultSetToTableModel(_driverCtrl.fetchAll()));
+                transactionTable.setModel(DbUtils.resultSetToTableModel(_transactionCtrl.fetchAll()));
+                supplierTable.setModel(DbUtils.resultSetToTableModel(_supplierCtrl.fetchAll()));
+                customerTable.setModel(DbUtils.resultSetToTableModel(_customerCtrl.fetchAll()));
+                vehicleTable.setModel(DbUtils.resultSetToTableModel(_vehicleCtrl.fetchAll()));
                 break;
         }
     }
@@ -70,19 +108,22 @@ public class HomeView extends javax.swing.JFrame {
         transaksiTabBtn = new javax.swing.JButton();
         inventoryTabBtn = new javax.swing.JButton();
         driverTabBtn = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        supplierTabBtn = new javax.swing.JButton();
+        customerTabBtn = new javax.swing.JButton();
+        vehicleTabBtn = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         tabView = new javax.swing.JTabbedPane();
         transaksiTab = new javax.swing.JPanel();
         transactionTableScrollPane = new javax.swing.JScrollPane();
         transactionTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        hapusTransactionBtn = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        transactionSearchTextField = new javax.swing.JTextField();
         searchTransactionBtn = new javax.swing.JButton();
         addTransactionBtn = new javax.swing.JButton();
         changeStatusBtn = new javax.swing.JButton();
         refreshTransactionBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        transactionSearchComboBox = new javax.swing.JComboBox<>();
+        transactionSearchTextField = new javax.swing.JTextField();
         inventoryTab = new javax.swing.JPanel();
         inventoryTableScrollPane = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
@@ -105,11 +146,43 @@ public class HomeView extends javax.swing.JFrame {
         tambahDriverBtn = new javax.swing.JButton();
         editDriverBtn = new javax.swing.JButton();
         refreshDriverBtn = new javax.swing.JButton();
+        supplierTab = new javax.swing.JPanel();
+        supplierTableScrollPane = new javax.swing.JScrollPane();
+        supplierTable = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        hapusSupplierBtn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        supplierSearchTextField = new javax.swing.JTextField();
+        searchSupplierBtn = new javax.swing.JButton();
+        tambahSupplierBtn = new javax.swing.JButton();
+        editSupplierBtn = new javax.swing.JButton();
+        refreshSupplierBtn = new javax.swing.JButton();
+        customerTab = new javax.swing.JPanel();
+        customerTableScrollPane = new javax.swing.JScrollPane();
+        customerTable = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        hapusCustomerBtn = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        customerSearchTextField = new javax.swing.JTextField();
+        searchCustomerBtn = new javax.swing.JButton();
+        tambahCustomerBtn = new javax.swing.JButton();
+        editCustomerBtn = new javax.swing.JButton();
+        refreshCustomerBtn = new javax.swing.JButton();
+        vehicleTab = new javax.swing.JPanel();
+        vehicleTableScrollPane = new javax.swing.JScrollPane();
+        vehicleTable = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        hapusVehicleBtn = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        vehicleSearchTextField = new javax.swing.JTextField();
+        searchVehicleBtn = new javax.swing.JButton();
+        tambahVehicleBtn = new javax.swing.JButton();
+        editVehicleBtn = new javax.swing.JButton();
+        refreshVehicleBtn = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 600));
         setMinimumSize(new java.awt.Dimension(1000, 600));
-        setPreferredSize(new java.awt.Dimension(900, 600));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 600));
@@ -151,6 +224,50 @@ public class HomeView extends javax.swing.JFrame {
             }
         });
 
+        supplierTabBtn.setBackground(new java.awt.Color(51, 102, 255));
+        supplierTabBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        supplierTabBtn.setForeground(new java.awt.Color(255, 255, 255));
+        supplierTabBtn.setText("Supplier");
+        supplierTabBtn.setBorder(null);
+        supplierTabBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierTabBtnActionPerformed(evt);
+            }
+        });
+
+        customerTabBtn.setBackground(new java.awt.Color(51, 102, 255));
+        customerTabBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        customerTabBtn.setForeground(new java.awt.Color(255, 255, 255));
+        customerTabBtn.setText("Customer");
+        customerTabBtn.setBorder(null);
+        customerTabBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerTabBtnActionPerformed(evt);
+            }
+        });
+
+        vehicleTabBtn.setBackground(new java.awt.Color(51, 102, 255));
+        vehicleTabBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        vehicleTabBtn.setForeground(new java.awt.Color(255, 255, 255));
+        vehicleTabBtn.setText("Vehicle");
+        vehicleTabBtn.setBorder(null);
+        vehicleTabBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vehicleTabBtnActionPerformed(evt);
+            }
+        });
+
+        logoutBtn.setBackground(new java.awt.Color(51, 102, 255));
+        logoutBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setText("Log Out");
+        logoutBtn.setBorder(null);
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -158,6 +275,10 @@ public class HomeView extends javax.swing.JFrame {
             .addComponent(transaksiTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(inventoryTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
             .addComponent(driverTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addComponent(supplierTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(customerTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(vehicleTabBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,26 +289,18 @@ public class HomeView extends javax.swing.JFrame {
                 .addComponent(inventoryTabBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(driverTabBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(supplierTabBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(customerTabBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(vehicleTabBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 561));
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 0, 868, 40));
-        jPanel4.getAccessibleContext().setAccessibleName("");
 
         tabView.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -213,23 +326,6 @@ public class HomeView extends javax.swing.JFrame {
         jLabel5.setText("Transaction Table");
         jLabel5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        hapusTransactionBtn.setBackground(new java.awt.Color(255, 0, 51));
-        hapusTransactionBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
-        hapusTransactionBtn.setForeground(new java.awt.Color(255, 255, 255));
-        hapusTransactionBtn.setText("Delete");
-        hapusTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusTransactionBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
-        jLabel6.setLabelFor(inventorySearchTextField);
-        jLabel6.setText("Search For Transaction");
-
-        transactionSearchTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
-        transactionSearchTextField.setPreferredSize(new java.awt.Dimension(59, 25));
-
         searchTransactionBtn.setBackground(new java.awt.Color(51, 102, 255));
         searchTransactionBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
         searchTransactionBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,7 +341,7 @@ public class HomeView extends javax.swing.JFrame {
         addTransactionBtn.setBackground(new java.awt.Color(51, 102, 255));
         addTransactionBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
         addTransactionBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addTransactionBtn.setText("Add");
+        addTransactionBtn.setText("New Transaction");
         addTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTransactionBtnActionPerformed(evt);
@@ -274,24 +370,36 @@ public class HomeView extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel6.setLabelFor(inventorySearchTextField);
+        jLabel6.setText("Search by");
+
+        transactionSearchTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        transactionSearchTextField.setPreferredSize(new java.awt.Dimension(59, 25));
+        transactionSearchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transactionSearchTextFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout transaksiTabLayout = new javax.swing.GroupLayout(transaksiTab);
         transaksiTab.setLayout(transaksiTabLayout);
         transaksiTabLayout.setHorizontalGroup(
             transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transaksiTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(transactionSearchTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchTransactionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(changeStatusBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refreshTransactionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, transaksiTabLayout.createSequentialGroup()
-                        .addComponent(hapusTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGroup(transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchTransactionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(changeStatusBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshTransactionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(addTransactionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(transaksiTabLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(transactionSearchComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(transactionSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(transactionTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -302,20 +410,20 @@ public class HomeView extends javax.swing.JFrame {
                 .addGroup(transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(transaksiTabLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                            .addComponent(transactionSearchComboBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(transactionSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(refreshTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(changeStatusBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(transaksiTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(hapusTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(addTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(transactionTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -410,17 +518,17 @@ public class HomeView extends javax.swing.JFrame {
             inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inventorySearchTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchInventoryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editBarangBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refreshInventoryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inventoryTabLayout.createSequentialGroup()
-                        .addComponent(hapusBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inventorySearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchInventoryBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshInventoryBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryTabLayout.createSequentialGroup()
+                        .addComponent(editBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tambahJenisBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(hapusBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tambahJenisBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(inventoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -441,11 +549,11 @@ public class HomeView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(refreshInventoryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tambahJenisBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hapusBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tambahJenisBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(editBarangBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(inventoryTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -540,17 +648,17 @@ public class HomeView extends javax.swing.JFrame {
             driverTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, driverTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(driverTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(driverSearchTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchDriverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editDriverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refreshDriverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, driverTabLayout.createSequentialGroup()
-                        .addComponent(hapusDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(driverTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(driverSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchDriverBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshDriverBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(driverTabLayout.createSequentialGroup()
+                        .addComponent(editDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tambahDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(hapusDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tambahDriverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(driverTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -571,18 +679,425 @@ public class HomeView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(refreshDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tambahDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(driverTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hapusDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tambahDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(editDriverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(driverTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         tabView.addTab("driver", driverTab);
 
+        supplierTab.setBackground(new java.awt.Color(255, 255, 255));
+
+        supplierTable.setFont(new java.awt.Font("Corbel", 0, 16)); // NOI18N
+        supplierTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        supplierTableScrollPane.setViewportView(supplierTable);
+
+        jLabel7.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("Supplier Table");
+        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        hapusSupplierBtn.setBackground(new java.awt.Color(255, 0, 51));
+        hapusSupplierBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        hapusSupplierBtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusSupplierBtn.setText("Delete");
+        hapusSupplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusSupplierBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel8.setLabelFor(inventorySearchTextField);
+        jLabel8.setText("Search For Supplier");
+
+        supplierSearchTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        supplierSearchTextField.setPreferredSize(new java.awt.Dimension(59, 25));
+
+        searchSupplierBtn.setBackground(new java.awt.Color(51, 102, 255));
+        searchSupplierBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        searchSupplierBtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchSupplierBtn.setText("Search");
+        searchSupplierBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchSupplierBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        searchSupplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchSupplierBtnActionPerformed(evt);
+            }
+        });
+
+        tambahSupplierBtn.setBackground(new java.awt.Color(51, 102, 255));
+        tambahSupplierBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        tambahSupplierBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tambahSupplierBtn.setText("Add");
+        tambahSupplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahSupplierBtnActionPerformed(evt);
+            }
+        });
+
+        editSupplierBtn.setBackground(new java.awt.Color(51, 102, 255));
+        editSupplierBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        editSupplierBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editSupplierBtn.setText("Edit");
+        editSupplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSupplierBtnActionPerformed(evt);
+            }
+        });
+
+        refreshSupplierBtn.setBackground(new java.awt.Color(51, 102, 255));
+        refreshSupplierBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        refreshSupplierBtn.setForeground(new java.awt.Color(255, 255, 255));
+        refreshSupplierBtn.setText("Refresh");
+        refreshSupplierBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        refreshSupplierBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        refreshSupplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshSupplierBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout supplierTabLayout = new javax.swing.GroupLayout(supplierTab);
+        supplierTab.setLayout(supplierTabLayout);
+        supplierTabLayout.setHorizontalGroup(
+            supplierTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, supplierTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(supplierTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(supplierSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchSupplierBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshSupplierBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, supplierTabLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(editSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hapusSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tambahSupplierBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(supplierTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        supplierTabLayout.setVerticalGroup(
+            supplierTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(supplierTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(supplierTabLayout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(supplierSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(searchSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tambahSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(supplierTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hapusSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editSupplierBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(supplierTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tabView.addTab("supplier", supplierTab);
+
+        customerTab.setBackground(new java.awt.Color(255, 255, 255));
+
+        customerTable.setFont(new java.awt.Font("Corbel", 0, 16)); // NOI18N
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        customerTableScrollPane.setViewportView(customerTable);
+
+        jLabel9.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setText("Customer Table");
+        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        hapusCustomerBtn.setBackground(new java.awt.Color(255, 0, 51));
+        hapusCustomerBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        hapusCustomerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusCustomerBtn.setText("Delete");
+        hapusCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusCustomerBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel10.setLabelFor(inventorySearchTextField);
+        jLabel10.setText("Search For Customer");
+
+        customerSearchTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        customerSearchTextField.setPreferredSize(new java.awt.Dimension(59, 25));
+
+        searchCustomerBtn.setBackground(new java.awt.Color(51, 102, 255));
+        searchCustomerBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        searchCustomerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchCustomerBtn.setText("Search");
+        searchCustomerBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchCustomerBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        searchCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchCustomerBtnActionPerformed(evt);
+            }
+        });
+
+        tambahCustomerBtn.setBackground(new java.awt.Color(51, 102, 255));
+        tambahCustomerBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        tambahCustomerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tambahCustomerBtn.setText("Add");
+        tambahCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahCustomerBtnActionPerformed(evt);
+            }
+        });
+
+        editCustomerBtn.setBackground(new java.awt.Color(51, 102, 255));
+        editCustomerBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        editCustomerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editCustomerBtn.setText("Edit");
+        editCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCustomerBtnActionPerformed(evt);
+            }
+        });
+
+        refreshCustomerBtn.setBackground(new java.awt.Color(51, 102, 255));
+        refreshCustomerBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        refreshCustomerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        refreshCustomerBtn.setText("Refresh");
+        refreshCustomerBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        refreshCustomerBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        refreshCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshCustomerBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout customerTabLayout = new javax.swing.GroupLayout(customerTab);
+        customerTab.setLayout(customerTabLayout);
+        customerTabLayout.setHorizontalGroup(
+            customerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(customerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(customerSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchCustomerBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshCustomerBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerTabLayout.createSequentialGroup()
+                        .addComponent(editCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hapusCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tambahCustomerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(customerTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        customerTabLayout.setVerticalGroup(
+            customerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(customerTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(customerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customerTabLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(customerSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(searchCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tambahCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(customerTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hapusCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(customerTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tabView.addTab("customer", customerTab);
+
+        vehicleTab.setBackground(new java.awt.Color(255, 255, 255));
+
+        vehicleTable.setFont(new java.awt.Font("Corbel", 0, 16)); // NOI18N
+        vehicleTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        vehicleTableScrollPane.setViewportView(vehicleTable);
+
+        jLabel11.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel11.setText("Vehicle Table");
+        jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        hapusVehicleBtn.setBackground(new java.awt.Color(255, 0, 51));
+        hapusVehicleBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        hapusVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusVehicleBtn.setText("Delete");
+        hapusVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusVehicleBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel12.setLabelFor(inventorySearchTextField);
+        jLabel12.setText("Search For Vehicle");
+
+        vehicleSearchTextField.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        vehicleSearchTextField.setPreferredSize(new java.awt.Dimension(59, 25));
+
+        searchVehicleBtn.setBackground(new java.awt.Color(51, 102, 255));
+        searchVehicleBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        searchVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchVehicleBtn.setText("Search");
+        searchVehicleBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchVehicleBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        searchVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchVehicleBtnActionPerformed(evt);
+            }
+        });
+
+        tambahVehicleBtn.setBackground(new java.awt.Color(51, 102, 255));
+        tambahVehicleBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        tambahVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        tambahVehicleBtn.setText("Add");
+        tambahVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tambahVehicleBtnActionPerformed(evt);
+            }
+        });
+
+        editVehicleBtn.setBackground(new java.awt.Color(51, 102, 255));
+        editVehicleBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        editVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editVehicleBtn.setText("Edit");
+        editVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editVehicleBtnActionPerformed(evt);
+            }
+        });
+
+        refreshVehicleBtn.setBackground(new java.awt.Color(51, 102, 255));
+        refreshVehicleBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 14)); // NOI18N
+        refreshVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        refreshVehicleBtn.setText("Refresh");
+        refreshVehicleBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        refreshVehicleBtn.setPreferredSize(new java.awt.Dimension(73, 25));
+        refreshVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshVehicleBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout vehicleTabLayout = new javax.swing.GroupLayout(vehicleTab);
+        vehicleTab.setLayout(vehicleTabLayout);
+        vehicleTabLayout.setHorizontalGroup(
+            vehicleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vehicleTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vehicleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vehicleSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchVehicleBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshVehicleBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vehicleTabLayout.createSequentialGroup()
+                        .addComponent(editVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hapusVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tambahVehicleBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(vehicleTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        vehicleTabLayout.setVerticalGroup(
+            vehicleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vehicleTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vehicleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vehicleTabLayout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vehicleSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(searchVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tambahVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(vehicleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hapusVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(vehicleTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tabView.addTab("vehicle", vehicleTab);
+
         jPanel1.add(tabView, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 11, -1, 550));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 0, 868, 40));
+        jPanel4.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -606,7 +1121,7 @@ public class HomeView extends javax.swing.JFrame {
     private void searchInventoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInventoryBtnActionPerformed
         String kodeBrg = inventorySearchTextField.getText();
         ResultSet result = _inventoryCtrl.fetchOne(kodeBrg);
-        
+
         inventoryTable.setModel(DbUtils.resultSetToTableModel(result));
     }//GEN-LAST:event_searchInventoryBtnActionPerformed
 
@@ -625,31 +1140,31 @@ public class HomeView extends javax.swing.JFrame {
 
     private void hapusBarangBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusBarangBtnActionPerformed
         Object kodeBrg = inventoryTable.getValueAt(inventoryTable.getSelectedRow(), 1);
-        
+
         _inventoryCtrl.hapusBarang(kodeBrg.toString());
         loadTable("inventory");
     }//GEN-LAST:event_hapusBarangBtnActionPerformed
 
     private void editBarangBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBarangBtnActionPerformed
         Object selectedKodeBrg = inventoryTable.getValueAt(inventoryTable.getSelectedRow(), 1);
-        
+
         try {
             ResultSet result = _inventoryCtrl.fetchOne(selectedKodeBrg.toString());
-            
+
             if (result.first()) {
                 String kodeBrg = result.getString("kode_barang");
                 String namaBrg = result.getString("nama_barang");
                 float hargaBrg = result.getFloat("harga_perkilo");
                 int jumlah = result.getInt("jumlah");
-                
+
                 EditInventoryForm editInventoryForm = new EditInventoryForm(kodeBrg, namaBrg, hargaBrg, jumlah);
                 editInventoryForm.setVisible(true);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_editBarangBtnActionPerformed
 
     private void driverTabBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverTabBtnActionPerformed
@@ -657,62 +1172,255 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_driverTabBtnActionPerformed
 
     private void hapusDriverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusDriverBtnActionPerformed
-        // TODO add your handling code here:
+        Object kodeDriver = driverTable.getValueAt(driverTable.getSelectedRow(), 1);
+
+        _driverCtrl.hapusDriver(kodeDriver.toString());
+        loadTable("driver");
     }//GEN-LAST:event_hapusDriverBtnActionPerformed
 
     private void searchDriverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDriverBtnActionPerformed
-        // TODO add your handling code here:
+        String kodeDriver = driverSearchTextField.getText();
+        ResultSet result = _driverCtrl.fetchOne(kodeDriver);
+
+        driverTable.setModel(DbUtils.resultSetToTableModel(result));
     }//GEN-LAST:event_searchDriverBtnActionPerformed
 
     private void tambahDriverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahDriverBtnActionPerformed
         AddDriverForm addDriverForm = new AddDriverForm();
-        
+
         addDriverForm.setVisible(true);
     }//GEN-LAST:event_tambahDriverBtnActionPerformed
 
     private void editDriverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDriverBtnActionPerformed
         Object selectedKodeDriver = driverTable.getValueAt(driverTable.getSelectedRow(), 1);
-        
+
         try {
             ResultSet result = _driverCtrl.fetchOne(selectedKodeDriver.toString());
-            
+
             if (result.first()) {
-                String kodeDriver = result.getString("kode_driver");
-                String namaDriver = result.getString("nama_driver");
-                
+                String kodeDriver = result.getString("kode_supir");
+                String namaDriver = result.getString("nama_supir");
+
                 EditDriverForm editDriverForm = new EditDriverForm(kodeDriver, namaDriver);
                 editDriverForm.setVisible(true);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editDriverBtnActionPerformed
 
     private void refreshDriverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshDriverBtnActionPerformed
-        // TODO add your handling code here:
+        loadTable("driver");
     }//GEN-LAST:event_refreshDriverBtnActionPerformed
 
-    private void hapusTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusTransactionBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hapusTransactionBtnActionPerformed
-
     private void searchTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTransactionBtnActionPerformed
-        // TODO add your handling code here:
+        Object selectedOption = transactionSearchComboBox.getSelectedItem();
+        String textFieldValue = transactionSearchTextField.getText();
+        ResultSet searchResult;
+
+        switch (selectedOption.toString()) {
+            case "status":
+                searchResult = _transactionCtrl.fetchByStatus(textFieldValue);
+                transactionTable.setModel(DbUtils.resultSetToTableModel(searchResult));
+                break;
+            case "kode":
+                searchResult = _transactionCtrl.fetchOne(textFieldValue);
+                transactionTable.setModel(DbUtils.resultSetToTableModel(searchResult));
+                break;
+            case "kode_supplier":
+                searchResult = _transactionCtrl.fetchBySupplierCode(textFieldValue);
+                transactionTable.setModel(DbUtils.resultSetToTableModel(searchResult));
+                break;
+            case "kode_customer":
+                searchResult = _transactionCtrl.fetchByCustomerCode(textFieldValue);
+                transactionTable.setModel(DbUtils.resultSetToTableModel(searchResult));
+                break;
+        }
     }//GEN-LAST:event_searchTransactionBtnActionPerformed
 
     private void addTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransactionBtnActionPerformed
-        // TODO add your handling code here:
+        AddTransactionForm addTransactionForm = new AddTransactionForm();
+
+        addTransactionForm.setVisible(true);
     }//GEN-LAST:event_addTransactionBtnActionPerformed
 
     private void changeStatusBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeStatusBtnActionPerformed
-        // TODO add your handling code here:
+        Object selectedKodeTransaksi = transactionTable.getValueAt(transactionTable.getSelectedRow(), 1);
+
+        try {
+            ResultSet result = _transactionCtrl.fetchOne(selectedKodeTransaksi.toString());
+
+            if (result.first()) {
+                String kodeTransaksi = result.getString("kode_transaksi");
+                String statusTransaksi = result.getString("status_transaksi");
+
+                ChangeStatusForm changeStatusForm = new ChangeStatusForm(kodeTransaksi, statusTransaksi);
+                changeStatusForm.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_changeStatusBtnActionPerformed
 
     private void refreshTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTransactionBtnActionPerformed
-        // TODO add your handling code here:
+        loadTable("transaction");
     }//GEN-LAST:event_refreshTransactionBtnActionPerformed
-    
+
+    private void hapusSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusSupplierBtnActionPerformed
+        Object selectedKodeSupplier = supplierTable.getValueAt(supplierTable.getSelectedRow(), 1);
+
+        _supplierCtrl.deleteSupplier(selectedKodeSupplier.toString());
+        loadTable("supplier");
+    }//GEN-LAST:event_hapusSupplierBtnActionPerformed
+
+    private void searchSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSupplierBtnActionPerformed
+        String kodeSupplier = supplierSearchTextField.getText();
+        
+        supplierTable.setModel(DbUtils.resultSetToTableModel(_supplierCtrl.fetchOne(kodeSupplier)));
+    }//GEN-LAST:event_searchSupplierBtnActionPerformed
+
+    private void tambahSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahSupplierBtnActionPerformed
+        AddSupplierForm addSupplierForm = new AddSupplierForm();
+        
+        addSupplierForm.setVisible(true);
+    }//GEN-LAST:event_tambahSupplierBtnActionPerformed
+
+    private void editSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSupplierBtnActionPerformed
+        Object selectedSupplierKode = supplierTable.getValueAt(supplierTable.getSelectedRow(), 1);
+
+        try {
+            ResultSet result = _supplierCtrl.fetchOne(selectedSupplierKode.toString());
+
+            if (result.first()) {
+                String kodeSupplier = result.getString("kode_supplier");
+                String namaSupplier = result.getString("nama_supplier");
+                String alamat = result.getString("alamat");
+
+                EditSupplierForm editSupplierForm = new EditSupplierForm(kodeSupplier, namaSupplier, alamat);
+                editSupplierForm.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editSupplierBtnActionPerformed
+
+    private void refreshSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshSupplierBtnActionPerformed
+        loadTable("supplier");
+    }//GEN-LAST:event_refreshSupplierBtnActionPerformed
+
+    private void supplierTabBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierTabBtnActionPerformed
+        tabView.setSelectedIndex(3);
+    }//GEN-LAST:event_supplierTabBtnActionPerformed
+
+    private void customerTabBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTabBtnActionPerformed
+        tabView.setSelectedIndex(4);
+    }//GEN-LAST:event_customerTabBtnActionPerformed
+
+    private void hapusCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusCustomerBtnActionPerformed
+        Object selectedKodeCustomer = customerTable.getValueAt(customerTable.getSelectedRow(), 1);
+
+        _customerCtrl.deleteCustomer(selectedKodeCustomer.toString());
+        loadTable("customer");
+    }//GEN-LAST:event_hapusCustomerBtnActionPerformed
+
+    private void searchCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerBtnActionPerformed
+        String kodeCustomer = customerSearchTextField.getText();
+        
+        customerTable.setModel(DbUtils.resultSetToTableModel(_customerCtrl.fetchOne(kodeCustomer)));
+    }//GEN-LAST:event_searchCustomerBtnActionPerformed
+
+    private void tambahCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahCustomerBtnActionPerformed
+        AddCustomerForm addCustomerForm = new AddCustomerForm();
+        
+        addCustomerForm.setVisible(true);
+    }//GEN-LAST:event_tambahCustomerBtnActionPerformed
+
+    private void editCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerBtnActionPerformed
+        Object selectedKodeCustomer = customerTable.getValueAt(customerTable.getSelectedRow(), 1);
+        
+        try {
+            ResultSet result = _customerCtrl.fetchOne(selectedKodeCustomer.toString());
+
+            if (result.first()) {
+                String kodeCustomer = result.getString("kode_customer");
+                String namaCustomer = result.getString("nama_customer");
+                String alamat = result.getString("alamat");
+
+                EditCustomerForm editCustomerForm = new EditCustomerForm(kodeCustomer, namaCustomer, alamat);
+                editCustomerForm.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editCustomerBtnActionPerformed
+
+    private void refreshCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCustomerBtnActionPerformed
+        loadTable("customer");
+    }//GEN-LAST:event_refreshCustomerBtnActionPerformed
+
+    private void transactionSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionSearchTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_transactionSearchTextFieldActionPerformed
+
+    private void vehicleTabBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleTabBtnActionPerformed
+        tabView.setSelectedIndex(5);
+    }//GEN-LAST:event_vehicleTabBtnActionPerformed
+
+    private void hapusVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusVehicleBtnActionPerformed
+        Object selectedNopol = vehicleTable.getValueAt(vehicleTable.getSelectedRow(), 1);
+        
+        _vehicleCtrl.deleteVehicle(selectedNopol.toString());
+        loadTable("vehicle");
+    }//GEN-LAST:event_hapusVehicleBtnActionPerformed
+
+    private void searchVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchVehicleBtnActionPerformed
+        String nopol = vehicleSearchTextField.getText();
+        ResultSet result = _vehicleCtrl.fetchOne(nopol);
+
+        vehicleTable.setModel(DbUtils.resultSetToTableModel(result));
+    }//GEN-LAST:event_searchVehicleBtnActionPerformed
+
+    private void tambahVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahVehicleBtnActionPerformed
+        AddVehicleForm addVehicleForm = new AddVehicleForm();
+        
+        addVehicleForm.setVisible(true);
+    }//GEN-LAST:event_tambahVehicleBtnActionPerformed
+
+    private void editVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVehicleBtnActionPerformed
+        Object selectedNopol = vehicleTable.getValueAt(vehicleTable.getSelectedRow(), 1);
+        
+        try {
+            ResultSet result = _vehicleCtrl.fetchOne(selectedNopol.toString());
+
+            if (result.first()) {
+                String nopol = result.getString("nopol_kendaraan");
+                String namaVehicle = result.getString("nama_kendaraan");
+                String tipeVehicle = result.getString("tipe_kendaraan");
+
+                EditVehicleForm editVehicleForm = new EditVehicleForm(nopol, namaVehicle, tipeVehicle);
+                editVehicleForm.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editVehicleBtnActionPerformed
+
+    private void refreshVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshVehicleBtnActionPerformed
+        loadTable("vehicle");
+    }//GEN-LAST:event_refreshVehicleBtnActionPerformed
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        LoginFormView loginView = new LoginFormView();
+        
+        loginView.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -751,43 +1459,80 @@ public class HomeView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addTransactionBtn;
     private javax.swing.JButton changeStatusBtn;
+    private javax.swing.JTextField customerSearchTextField;
+    private javax.swing.JPanel customerTab;
+    private javax.swing.JButton customerTabBtn;
+    private javax.swing.JTable customerTable;
+    private javax.swing.JScrollPane customerTableScrollPane;
     private javax.swing.JTextField driverSearchTextField;
     private javax.swing.JPanel driverTab;
     private javax.swing.JButton driverTabBtn;
     private javax.swing.JTable driverTable;
     private javax.swing.JScrollPane driverTableScrollPane;
     private javax.swing.JButton editBarangBtn;
+    private javax.swing.JButton editCustomerBtn;
     private javax.swing.JButton editDriverBtn;
+    private javax.swing.JButton editSupplierBtn;
+    private javax.swing.JButton editVehicleBtn;
     private javax.swing.JButton hapusBarangBtn;
+    private javax.swing.JButton hapusCustomerBtn;
     private javax.swing.JButton hapusDriverBtn;
-    private javax.swing.JButton hapusTransactionBtn;
+    private javax.swing.JButton hapusSupplierBtn;
+    private javax.swing.JButton hapusVehicleBtn;
     private javax.swing.JTextField inventorySearchTextField;
     private javax.swing.JPanel inventoryTab;
     private javax.swing.JButton inventoryTabBtn;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JScrollPane inventoryTableScrollPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton refreshCustomerBtn;
     private javax.swing.JButton refreshDriverBtn;
     private javax.swing.JButton refreshInventoryBtn;
+    private javax.swing.JButton refreshSupplierBtn;
     private javax.swing.JButton refreshTransactionBtn;
+    private javax.swing.JButton refreshVehicleBtn;
+    private javax.swing.JButton searchCustomerBtn;
     private javax.swing.JButton searchDriverBtn;
     private javax.swing.JButton searchInventoryBtn;
+    private javax.swing.JButton searchSupplierBtn;
     private javax.swing.JButton searchTransactionBtn;
+    private javax.swing.JButton searchVehicleBtn;
+    private javax.swing.JTextField supplierSearchTextField;
+    private javax.swing.JPanel supplierTab;
+    private javax.swing.JButton supplierTabBtn;
+    private javax.swing.JTable supplierTable;
+    private javax.swing.JScrollPane supplierTableScrollPane;
     private javax.swing.JTabbedPane tabView;
+    private javax.swing.JButton tambahCustomerBtn;
     private javax.swing.JButton tambahDriverBtn;
     private javax.swing.JButton tambahJenisBtn;
+    private javax.swing.JButton tambahSupplierBtn;
+    private javax.swing.JButton tambahVehicleBtn;
+    private javax.swing.JComboBox<String> transactionSearchComboBox;
     private javax.swing.JTextField transactionSearchTextField;
     private javax.swing.JTable transactionTable;
     private javax.swing.JScrollPane transactionTableScrollPane;
     private javax.swing.JPanel transaksiTab;
     private javax.swing.JButton transaksiTabBtn;
+    private javax.swing.JTextField vehicleSearchTextField;
+    private javax.swing.JPanel vehicleTab;
+    private javax.swing.JButton vehicleTabBtn;
+    private javax.swing.JTable vehicleTable;
+    private javax.swing.JScrollPane vehicleTableScrollPane;
     // End of variables declaration//GEN-END:variables
 }

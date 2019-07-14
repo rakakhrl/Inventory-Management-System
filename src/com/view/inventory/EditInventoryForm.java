@@ -86,7 +86,7 @@ public class EditInventoryForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Circular Std Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Tambah Jenis Barang");
+        jLabel1.setText("Edit Inventory Item");
 
         jLabel2.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
         jLabel2.setText("Kode Barang");
@@ -105,7 +105,7 @@ public class EditInventoryForm extends javax.swing.JFrame {
         submitBtn.setBackground(new java.awt.Color(51, 102, 255));
         submitBtn.setFont(new java.awt.Font("Circular Std Bold", 0, 18)); // NOI18N
         submitBtn.setForeground(new java.awt.Color(255, 255, 255));
-        submitBtn.setText("Masukan");
+        submitBtn.setText("Submit");
         submitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitBtnActionPerformed(evt);
